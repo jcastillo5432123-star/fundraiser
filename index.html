@@ -1,1 +1,336 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creative Youth | Mission & Landing Page</title>
+    <style>
+      :root {
+        --ink: #f8f9ff;
+        --muted: #d6daf6;
+        --panel: rgba(15, 18, 48, 0.72);
+        --stroke: rgba(255, 255, 255, 0.16);
+        --pink: #ff4ecd;
+        --violet: #7c4dff;
+        --cyan: #2de2e6;
+        --gold: #ffd166;
+        --shadow: 0 22px 55px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+        color: var(--ink);
+        background: radial-gradient(circle at 10% 10%, #1f255c 0%, transparent 25%),
+          radial-gradient(circle at 95% 5%, #501e77 0%, transparent 28%),
+          radial-gradient(circle at 85% 75%, #0f5a7d 0%, transparent 26%),
+          linear-gradient(135deg, #090a1f 0%, #130a36 40%, #091930 100%);
+        overflow-x: hidden;
+      }
+
+      .paint-stroke,
+      .paint-stroke::before,
+      .paint-stroke::after {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(70px);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .paint-stroke {
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 78, 205, 0.35);
+        top: 12%;
+        right: -80px;
+      }
+
+      .paint-stroke::before {
+        content: "";
+        width: 250px;
+        height: 250px;
+        background: rgba(45, 226, 230, 0.3);
+        top: 330px;
+        left: -1150px;
+      }
+
+      .paint-stroke::after {
+        content: "";
+        width: 200px;
+        height: 200px;
+        background: rgba(124, 77, 255, 0.34);
+        top: 520px;
+        left: -250px;
+      }
+
+      .wrapper {
+        width: min(1120px, 92vw);
+        margin: 0 auto;
+      }
+
+      header {
+        padding: 2.2rem 0 1.8rem;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-weight: 700;
+      }
+
+      .logo {
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 12px;
+        background: linear-gradient(130deg, var(--pink), var(--violet));
+        display: grid;
+        place-items: center;
+        box-shadow: 0 8px 20px rgba(255, 78, 205, 0.35);
+      }
+
+      .tag {
+        border: 1px solid var(--stroke);
+        padding: 0.4rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      .glass {
+        background: var(--panel);
+        border: 1px solid var(--stroke);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(8px);
+      }
+
+      .hero {
+        padding: 1.8rem;
+        display: grid;
+        gap: 1.2rem;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2.2rem, 4vw, 3.5rem);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+      }
+
+      .accent {
+        background: linear-gradient(120deg, var(--pink), var(--gold));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+      }
+
+      .pill {
+        border-radius: 999px;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+
+      .cta-button {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.9rem 1.4rem;
+        border-radius: 999px;
+        color: #1a0829;
+        background: linear-gradient(120deg, var(--gold), #ffc34d);
+        font-weight: 700;
+        border: none;
+      }
+
+      .ghost-button {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.85rem 1.3rem;
+        border-radius: 999px;
+        color: var(--ink);
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .mission-grid {
+        margin-top: 1.6rem;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .mission-card {
+        padding: 1.1rem;
+      }
+
+      .mission-card h3 {
+        margin-top: 0;
+      }
+
+      main {
+        padding: 0 0 3rem;
+      }
+
+      .story {
+        margin-top: 1.4rem;
+        padding: 1.4rem;
+      }
+
+      .story-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 1.1rem;
+      }
+
+      .story blockquote {
+        margin: 0;
+        font-size: 1.1rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .launch-highlight {
+        display: grid;
+        gap: 0.6rem;
+      }
+
+      .launch-highlight strong {
+        font-size: 1.4rem;
+      }
+
+      .footer {
+        text-align: center;
+        color: var(--muted);
+        padding: 1rem 0 2.4rem;
+      }
+
+      @media (max-width: 960px) {
+        .mission-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .story-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="paint-stroke" aria-hidden="true"></div>
+
+    <header class="wrapper">
+      <nav>
+        <div class="brand">
+          <div class="logo">CY</div>
+          <span>Creative Youth</span>
+        </div>
+        <div class="tag">McAllen, Texas • Arts & Imagination</div>
+      </nav>
+
+      <section class="glass hero">
+        <h1>
+          Creative Youth is bringing <span class="accent">creativity to every kid</span> in
+          McAllen, Texas.
+        </h1>
+        <p>
+          Founded by <strong>Joaquin Castillo</strong>, Creative Youth exists to build safe spaces
+          where young people can paint, design, build, and tell their stories. We turn unused
+          rooms into bright studios, partner with local venues, and create workshops that help
+          youth feel seen and inspired.
+        </p>
+        <div class="pill-row">
+          <span class="pill">Youth Creative Workshops</span>
+          <span class="pill">Local Artist Mentorship</span>
+          <span class="pill">Community Partnerships</span>
+        </div>
+        <div class="cta-row">
+          <a class="cta-button" href="donate.html">Donate to the Launch Campaign</a>
+          <a class="ghost-button" href="donate.html">View Launch Details</a>
+        </div>
+      </section>
+    </header>
+
+    <main class="wrapper">
+      <section class="glass mission-card story">
+        <div class="story-grid">
+          <blockquote>
+            “McAllen is full of talent. Creative Youth is here to make sure every kid has a
+            place to explore it.” — Joaquin Castillo
+          </blockquote>
+          <div class="launch-highlight">
+            <span class="pill">First Collaboration Goal</span>
+            <strong>$3,000</strong>
+            <span class="muted">
+              Funds our first collaborative workshop with a local Valley partner space.
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="mission-grid">
+        <article class="glass mission-card">
+          <h3>Mission</h3>
+          <p>
+            Build creative spaces and workshops that are free, welcoming, and built for young
+            people across McAllen.
+          </p>
+        </article>
+        <article class="glass mission-card">
+          <h3>How We Start</h3>
+          <p>
+            Launch a pop-up creative workshop in partnership with a local space like a coffee
+            shop or community venue.
+          </p>
+        </article>
+        <article class="glass mission-card">
+          <h3>Why It Matters</h3>
+          <p>
+            Youth deserve access to art, mentorship, and safe spaces where they can imagine a
+            future beyond their limits.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      Creative Youth • A nonprofit initiative bringing creativity to McAllen youth.
+    </footer>
+  </body>
+</html>
