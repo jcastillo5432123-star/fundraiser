@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creative Youth | Launch Campaign Fundraiser</title>
+    <style>
+      :root {
+        --ink: #f8f9ff;
+        --muted: #d6daf6;
+        --panel: rgba(15, 18, 48, 0.72);
+        --stroke: rgba(255, 255, 255, 0.16);
+        --pink: #ff4ecd;
+        --violet: #7c4dff;
+        --cyan: #2de2e6;
+        --gold: #ffd166;
+        --green: #5ee1a8;
+        --shadow: 0 22px 55px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+        color: var(--ink);
+        background: radial-gradient(circle at 10% 10%, #1f255c 0%, transparent 25%),
+          radial-gradient(circle at 95% 5%, #501e77 0%, transparent 28%),
+          radial-gradient(circle at 85% 75%, #0f5a7d 0%, transparent 26%),
+          linear-gradient(135deg, #090a1f 0%, #130a36 40%, #091930 100%);
+        overflow-x: hidden;
+      }
+
+      .paint-stroke,
+      .paint-stroke::before,
+      .paint-stroke::after {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(70px);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .paint-stroke {
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 78, 205, 0.35);
+        top: 12%;
+        right: -80px;
+      }
+
+      .paint-stroke::before {
+        content: "";
+        width: 250px;
+        height: 250px;
+        background: rgba(45, 226, 230, 0.3);
+        top: 330px;
+        left: -1150px;
+      }
+
+      .paint-stroke::after {
+        content: "";
+        width: 200px;
+        height: 200px;
+        background: rgba(124, 77, 255, 0.34);
+        top: 520px;
+        left: -250px;
+      }
+
+      .wrapper {
+        width: min(1120px, 92vw);
+        margin: 0 auto;
+      }
+
+      header {
+        padding: 2.2rem 0 1.8rem;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-weight: 700;
+      }
+
+      .logo {
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 12px;
+        background: linear-gradient(130deg, var(--pink), var(--violet));
+        display: grid;
+        place-items: center;
+        box-shadow: 0 8px 20px rgba(255, 78, 205, 0.35);
+      }
+
+      .tag {
+        border: 1px solid var(--stroke);
+        padding: 0.4rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      .glass {
+        background: var(--panel);
+        border: 1px solid var(--stroke);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(8px);
+      }
+
+      .hero {
+        padding: 1.8rem;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2rem, 3.9vw, 3.3rem);
+        line-height: 1.06;
+        letter-spacing: -0.02em;
+      }
+
+      .accent {
+        background: linear-gradient(120deg, var(--pink), var(--gold));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hero p {
+        margin-top: 1rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .launch-grid {
+        margin-top: 1.2rem;
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 1rem;
+      }
+
+      .campaign {
+        padding: 1.2rem;
+      }
+
+      h2 {
+        margin: 0 0 0.6rem;
+      }
+
+      .total {
+        font-size: 2.1rem;
+        font-weight: 800;
+        margin: 0.2rem 0;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .meter {
+        margin: 0.9rem 0 0.7rem;
+        width: 100%;
+        height: 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.14);
+        overflow: hidden;
+      }
+
+      .meter > span {
+        display: block;
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--pink), var(--gold));
+      }
+
+      .stats {
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.65rem;
+      }
+
+      .stat {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.11);
+        border-radius: 14px;
+        padding: 0.7rem;
+        font-size: 0.92rem;
+      }
+
+      .campaign-details {
+        padding: 1.2rem;
+      }
+
+      .detail-item {
+        margin: 0.55rem 0;
+        padding: 0.75rem 0.85rem;
+        border-radius: 12px;
+        border-left: 4px solid var(--cyan);
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      main {
+        padding: 0 0 3rem;
+      }
+
+      .donate {
+        margin-top: 1rem;
+        padding: 1.35rem;
+      }
+
+      form {
+        display: grid;
+        gap: 0.85rem;
+      }
+
+      label {
+        font-size: 0.95rem;
+      }
+
+      input,
+      select,
+      textarea,
+      button {
+        font: inherit;
+      }
+
+      input,
+      select,
+      textarea {
+        margin-top: 0.35rem;
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(6, 8, 30, 0.45);
+        color: var(--ink);
+        border-radius: 12px;
+        padding: 0.78rem;
+      }
+
+      button {
+        border: none;
+        border-radius: 12px;
+        padding: 0.9rem 1rem;
+        color: #1a0829;
+        background: linear-gradient(120deg, var(--gold), #ffc34d);
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .form-msg {
+        margin: 0.2rem 0 0;
+        color: var(--green);
+        font-weight: 700;
+        min-height: 1.2rem;
+      }
+
+      .footer {
+        text-align: center;
+        color: var(--muted);
+        padding: 1rem 0 2.4rem;
+      }
+
+      @media (max-width: 860px) {
+        .launch-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero,
+        .campaign,
+        .campaign-details,
+        .donate {
+          padding: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="paint-stroke" aria-hidden="true"></div>
+
+    <header class="wrapper">
+      <nav>
+        <div class="brand">
+          <div class="logo">CY</div>
+          <span>Creative Youth</span>
+        </div>
+        <div class="tag">McAllen, Texas • Arts & Imagination</div>
+      </nav>
+
+      <section class="glass hero">
+        <h1>
+          Launch the first <span class="accent">Creative Youth Collaboration</span> in McAllen.
+        </h1>
+        <p>
+          Founded by <strong>Joaquin Castillo</strong>, Creative Youth is beginning with one focused
+          mission: partner with a local Valley space (like a coffee shop or community venue)
+          and host a high-energy creative workshop for youth.
+        </p>
+
+        <div class="launch-grid">
+          <article class="glass campaign" aria-label="launch campaign progress">
+            <h2>Launch Campaign</h2>
+            <p class="muted">Goal: fund one collaborative workshop with a local partner venue.</p>
+            <p class="total">$0 / $3,000</p>
+            <div class="meter"><span></span></div>
+            <p class="muted">No donors yet — your donation can start everything.</p>
+            <div class="stats">
+              <div class="stat"><strong>0</strong><br />Donors so far</div>
+              <div class="stat"><strong>1</strong><br />Target partner venue</div>
+              <div class="stat"><strong>$3,000</strong><br />Workshop launch goal</div>
+              <div class="stat"><strong>McAllen</strong><br />Local creative collaboration</div>
+            </div>
+          </article>
+
+          <article class="glass campaign-details">
+            <h2>What this launch funds</h2>
+            <div class="detail-item">Venue collaboration + setup support for a local creative space.</div>
+            <div class="detail-item">Workshop supplies, materials, and youth-friendly creative stations.</div>
+            <div class="detail-item">Guest creative facilitators and mentorship for workshop participants.</div>
+            <div class="detail-item">A repeatable pilot model for future collaborations across the Valley.</div>
+          </article>
+        </div>
+      </section>
+    </header>
+
+    <main class="wrapper">
+      <section class="glass donate">
+        <h2>Make a donation</h2>
+        <form id="donation-form">
+          <label>
+            Full name
+            <input type="text" name="name" required placeholder="Your name" />
+          </label>
+
+          <label>
+            Donation amount
+            <select name="amount" required>
+              <option value="">Choose amount</option>
+              <option value="$25">$25</option>
+              <option value="$50">$50</option>
+              <option value="$100">$100</option>
+              <option value="$250">$250</option>
+              <option value="$500">$500</option>
+              <option value="custom">Custom</option>
+            </select>
+          </label>
+
+          <label>
+            Message to local youth
+            <textarea name="message" rows="3" placeholder="Share encouragement (optional)"></textarea>
+          </label>
+
+          <button type="submit">Donate to Creative Youth</button>
+          <p class="form-msg" id="form-msg" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      Creative Youth • Nonprofit fundraiser for youth creative spaces in McAllen, Texas.
+    </footer>
+
+    <script>
+      const form = document.getElementById("donation-form");
+      const formMsg = document.getElementById("form-msg");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const data = new FormData(form);
+        const name = data.get("name");
+        const amount = data.get("amount");
+        formMsg.textContent = `Thank you, ${name}! Your ${amount} donation helps launch the first Creative Youth collaboration in McAllen.`;
+        form.reset();
+      });
+    </script>
+  </body>
+</html>
